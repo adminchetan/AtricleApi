@@ -11,6 +11,7 @@ namespace NewsService.Controllers
 {
     [Route("api/[controller]/")]
     [ApiController]
+    [Authorize]
     public class MiscController : Controller
     {
         private readonly newsDbContext _newsDbContext;

@@ -19,14 +19,17 @@ namespace NewsService.Controllers
             _jwtOptions = options.Value;
         }
 
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserAuthDTO collection)
         {
             //fetch your username and password and check
-
-
             if(collection.username=="abc" && collection.password=="123") 
-            {
+           {
                 var jwtkey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(_jwtOptions.key));
                 var credentials = new SigningCredentials(jwtkey, SecurityAlgorithms.HmacSha256);
 
@@ -37,7 +40,7 @@ namespace NewsService.Controllers
 
                 var sToken = new JwtSecurityToken(_jwtOptions.key, _jwtOptions.Issuer, claims, expires: DateTime.Now.AddHours(1),signingCredentials:credentials);
                 var token = new JwtSecurityTokenHandler().WriteToken(sToken);
-                return Ok(new { token = token, name = "testAdmin",userId= "Localhost" });
+                return Ok(new { token = token, name = "Champak Joshi",userId= "Cjoshi" });
                 // after 1 hours Token will expire
 
             }
