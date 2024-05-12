@@ -7,5 +7,14 @@ namespace NewsService.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
+    public ActionResult CreateUser()
+        {
+            return Ok();
+        }
+
+
     }
+
+   
 }
