@@ -9,7 +9,7 @@ namespace NewsService.Context
         public newsDbContext(DbContextOptions<newsDbContext> options):base(options)
         {            
         }
-
+        public DbSet<tbl_UserData> tbl_UserData { get; set; }
         public DbSet<tbl_PostMasterMain> tbl_PostMastersMain { get; set; }
 
         public DbSet<tbl_UploadedFilesForPost> tbl_UploadedFiles { get; set; }
