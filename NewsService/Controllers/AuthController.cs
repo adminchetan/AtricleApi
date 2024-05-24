@@ -8,6 +8,7 @@ using System.Security.Claims;
 using NewsService.Interface;
 using NewsService.Models;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Newtonsoft.Json.Linq;
 namespace NewsService.Controllers
 {
 
@@ -27,14 +28,14 @@ namespace NewsService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] UserAuthDTO collection)
+        public IActionResult Login([FromBody] UserAuthDTO collection)
         {
            
             //Check the login credentials
 
             var (success, message,username,userid,UserCompleteName) = _authHandler.ValidateUserCredentials(collection.username,collection.password);
 
-
+          
 
             //fetch your username and password and check
             if(success) 
@@ -46,11 +47,16 @@ namespace NewsService.Controllers
                 {
                     new Claim ("username",collection.username)
                 };
-
                 var sToken = new JwtSecurityToken(_jwtOptions.key, _jwtOptions.Issuer, claims, expires: DateTime.Now.AddHours(1),signingCredentials:credentials);
-                var token = new JwtSecurityTokenHandler().WriteToken(sToken);
-                return Ok(new { token = token, LoginName = username, userId= userid, userName= UserCompleteName });
-                // after 1 hours Token will expire
+                var token = new JwtSecurityTokenHandler().WriteToken(sToken);       // after 1 hours Token will expire
+
+
+                if (token != null)
+                {
+                    _authHandler.UpdatedLastLoggedIn(collection.username);
+                }
+
+                return Ok(new { token = token, LoginName = username, userId = userid, userName = UserCompleteName });
 
             }
 
@@ -58,7 +64,6 @@ namespace NewsService.Controllers
             {
                 return Json(new { success=success,error = message });
             }
-           
         }
 
         [HttpPost]

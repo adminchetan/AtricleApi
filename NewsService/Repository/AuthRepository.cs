@@ -168,8 +168,17 @@ namespace NewsService.Repository
             return i;
         }
 
-
-
+        public bool UpdatedLastLoggedIn(string username)
+        {
+            var response = false;
+            var record = _newsDbContext.tbl_AuthMasters.FirstOrDefault(r => r.Email==username);
+            if (record != null){
+                record.LastLogin=DateTime.Now;
+                response=Convert.ToBoolean(_newsDbContext.SaveChanges());
+                return (response);
+            }
+            return (response);
+        }
 
     }
 }
