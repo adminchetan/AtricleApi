@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NewsService.Context;
 using NewsService.DTO;
 using NewsService.Models;
-using System.Globalization;
 
 namespace NewsService.Controllers
 {
@@ -15,13 +13,13 @@ namespace NewsService.Controllers
     public class MiscController : Controller
     {
         private readonly newsDbContext _newsDbContext;
-        public MiscController(newsDbContext newsDbContext )
+        public MiscController(newsDbContext newsDbContext)
         {
-            _newsDbContext=newsDbContext;
+            _newsDbContext = newsDbContext;
         }
 
         [HttpGet("GetCategories")]
-      
+
         public async Task<ActionResult<IEnumerable<tbl_CategoryMaster>>> GetCategories()
         {
             return await _newsDbContext.tbl_CategoryMasters.ToListAsync();
@@ -99,8 +97,8 @@ namespace NewsService.Controllers
             var query = _newsDbContext.tbl_PostMastersMain
                 .Where(x => x.SubCategoryId == SubCategoryId)
                 .OrderBy(x => Guid.NewGuid())
-                .ThenByDescending(x=>x.Id)
-                .Take(15); 
+                .ThenByDescending(x => x.Id)
+                .Take(15);
             var result = await query.ToListAsync();
             return result;
         }
@@ -114,7 +112,7 @@ namespace NewsService.Controllers
                 .OrderBy(x => x.Id) // Order by DateTime in descending order
                 .Take(5) // Select the top 10 randomly ordered posts
                 .ToList(); // Convert the results to a list
-           return query;
+            return query;
         }
 
 
@@ -157,11 +155,11 @@ namespace NewsService.Controllers
         public async Task<List<tbl_PostMasterMain>> GetPostbyExclusive()
         {
             var query = _newsDbContext.tbl_PostMastersMain
-                .Where (x => x.IsBreaking ==true  )
+                .Where(x => x.IsBreaking == true)
                 .OrderBy(x => x.Id) // Order by DateTime in descending order
                 .Take(5) // Select the top 10 randomly ordered posts
                 .ToList(); // Convert the results to a list
-                    return query;
+            return query;
         }
 
 
@@ -180,7 +178,7 @@ namespace NewsService.Controllers
             _newsDbContext.tbl_CategoryMasters.Remove(category);
             await _newsDbContext.SaveChangesAsync();
 
-            return Json(Ok(category.categoryName+ " has been deleted successfully")); // Return the deleted category if deletion is successful
+            return Json(Ok(category.categoryName + " has been deleted successfully")); // Return the deleted category if deletion is successful
         }
 
 
@@ -209,7 +207,7 @@ namespace NewsService.Controllers
             var subcategory = await _newsDbContext.tbl_SubCategoryMasters.FindAsync(subcategoryId);
             if (subcategory == null)
             {
-                return NotFound(subcategory?.subcategoryName+"SubCategory Not Exist"); // Return 404 Not Found if category with the given ID is not found
+                return NotFound(subcategory?.subcategoryName + "SubCategory Not Exist"); // Return 404 Not Found if category with the given ID is not found
             }
 
             _newsDbContext.tbl_SubCategoryMasters.Remove(subcategory);
@@ -231,7 +229,7 @@ namespace NewsService.Controllers
             _newsDbContext.tbl_SubCategoryMasters.Update(subcategory);
             await _newsDbContext.SaveChangesAsync();
 
-            return Json(Ok("Status of "+subcategory.subcategoryName+" has been changed successfully")); // Return the updated category if update is successful
+            return Json(Ok("Status of " + subcategory.subcategoryName + " has been changed successfully")); // Return the updated category if update is successful
         }
 
         [HttpPost("GetPostdetails")]
@@ -242,7 +240,7 @@ namespace NewsService.Controllers
                         on postmaster.CategoryId equals category.categoryId
                         join subcategory in _newsDbContext.tbl_SubCategoryMasters
                         on postmaster.SubCategoryId equals subcategory.subcategroyid
-                        where postmaster.DateTime >=fromdate && postmaster.DateTime <= todate
+                        where postmaster.DateTime >= fromdate && postmaster.DateTime <= todate
                         select new PostDetailDTO
                         {
                             Id = postmaster.Id,

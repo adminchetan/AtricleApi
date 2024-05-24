@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsService.Context;
 
@@ -11,9 +12,11 @@ using NewsService.Context;
 namespace NewsService.Migrations
 {
     [DbContext(typeof(newsDbContext))]
-    partial class newsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522110139_changeauthtableNull")]
+    partial class changeauthtableNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,7 @@ namespace NewsService.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -56,7 +59,7 @@ namespace NewsService.Migrations
 
                     b.Property<string>("MobileNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -66,12 +69,6 @@ namespace NewsService.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("MobileNumber")
-                        .IsUnique();
 
                     b.ToTable("tbl_AuthMaster", "dbo");
                 });

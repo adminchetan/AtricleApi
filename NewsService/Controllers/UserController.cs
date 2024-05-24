@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using NewsService.Context;
 using NewsService.Models;
-using System.Reflection;
 using NewsService.Utility;
 namespace NewsService.Controllers
 {
@@ -45,7 +42,7 @@ namespace NewsService.Controllers
                 _context.SaveChanges();
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 return BadRequest(ex.Message);
@@ -91,7 +88,7 @@ namespace NewsService.Controllers
 
 
 
-    
 
-   
+
+
 

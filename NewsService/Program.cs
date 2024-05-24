@@ -19,7 +19,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 
 // Add JWT //
- builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 // Add JWT //
 var key = builder.Configuration.GetSection("Jwt:key").Get<string>();
 //Add jwt Auth
@@ -85,8 +85,9 @@ builder.Services.AddDbContext<newsDbContext>(options => options.UseSqlServer(con
 
 //Dependency Injection//
 builder.Services.AddTransient<IDocumentHandler, DocumentUploadRepository>();
-builder.Services.AddTransient<IErrorLogger,FileUploadErrorLog>();
+builder.Services.AddTransient<IErrorLogger, AllMessageAndLogs>();
 builder.Services.AddTransient<IPostHandler, PostRepository>();
+builder.Services.AddTransient<IAuthHandler, AuthRepository>();
 //Dependency Injection//
 
 

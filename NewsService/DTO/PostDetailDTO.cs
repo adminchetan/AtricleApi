@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace NewsService.DTO
+﻿namespace NewsService.DTO
 {
     public class PostDetailDTO
     {

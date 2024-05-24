@@ -3,7 +3,6 @@ using NewsService.Context;
 using NewsService.Interface;
 using NewsService.Models;
 using System.Net;
-using System.Reflection.Metadata;
 
 namespace NewsService.Repository
 {
@@ -12,7 +11,7 @@ namespace NewsService.Repository
         public readonly newsDbContext _context;
         public readonly IErrorLogger _logger;
         public readonly IDocumentHandler _documentHandler;
-        public PostRepository(newsDbContext context ,IErrorLogger logger,IDocumentHandler documentHandler)
+        public PostRepository(newsDbContext context, IErrorLogger logger, IDocumentHandler documentHandler)
         {
             _context = context;
             _logger = logger;
@@ -40,15 +39,21 @@ namespace NewsService.Repository
                 });
                 _tbl_PostMasterMain = new tbl_PostMasterMain
                 {
-                    FeaturedMedia = res1, Title = value.Title, CategoryId = value.CategoryId,
-                    SubCategoryId = value.SubCategoryID,IsBreaking = value.IsBreaking,
-                    IsTrending = value.IsTrending,IsSaved = value.IsSaved,
-                    Body = decodedHtml,PostedBy = value.PostedBy,
-                    DateTime = value.DateTime,Device = value.Device,
+                    FeaturedMedia = res1,
+                    Title = value.Title,
+                    CategoryId = value.CategoryId,
+                    SubCategoryId = value.SubCategoryID,
+                    IsBreaking = value.IsBreaking,
+                    IsTrending = value.IsTrending,
+                    IsSaved = value.IsSaved,
+                    Body = decodedHtml,
+                    PostedBy = value.PostedBy,
+                    DateTime = value.DateTime,
+                    Device = value.Device,
                     IsDisabled = value.IsDisabled,
-                 };
+                };
                 _context.tbl_PostMastersMain.Add(_tbl_PostMasterMain);
-                var i=_context.SaveChanges();
+                var i = _context.SaveChanges();
                 return Convert.ToString(Convert.ToBoolean(i));
             }
 
@@ -60,8 +65,8 @@ namespace NewsService.Repository
 
         public async Task<string> UpdatePost([FromForm] PostUpdateCollectioncs value)
         {
-            var FeaturedImageFinalUrl = "";  
-           
+            var FeaturedImageFinalUrl = "";
+
             if (value.FormFile == null)//* Make the existing Image as featued image
             {
                 FeaturedImageFinalUrl = value.featuredImage;  // If value is there then user no changed Featured image
@@ -100,7 +105,7 @@ namespace NewsService.Repository
                 post.Device = value.Device;
                 post.IsDisabled = value.IsDisabled;
                 var i = _context.SaveChanges();
-                return Convert.ToString(Convert.ToBoolean(i)) ;
+                return Convert.ToString(Convert.ToBoolean(i));
             }
 
             catch (Exception ex)

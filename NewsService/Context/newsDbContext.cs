@@ -9,6 +9,9 @@ namespace NewsService.Context
         public newsDbContext(DbContextOptions<newsDbContext> options):base(options)
         {            
         }
+
+        public DbSet<tbl_Logger> tbl_Loggers { get; set; }
+        public DbSet<tbl_AuthMaster> tbl_AuthMasters { get; set; }
         public DbSet<tbl_UserData> tbl_UserData { get; set; }
         public DbSet<tbl_PostMasterMain> tbl_PostMastersMain { get; set; }
 
@@ -37,7 +40,16 @@ namespace NewsService.Context
               .WithMany(c => c.SubCategories)
               .HasForeignKey(s => s.CategoryId);
             /// Specify that the property should store Unicode data (UTF-8)
+
+
+
+            modelBuilder.Entity<tbl_AuthMaster>().HasIndex(u => u.Email).IsUnique(); //make email id as unique
+            modelBuilder.Entity<tbl_AuthMaster>().HasIndex(u => u.MobileNumber).IsUnique(); //make email id as unique
         }
+
+
+
+
 
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsService.Context;
 
@@ -11,9 +12,11 @@ using NewsService.Context;
 namespace NewsService.Migrations
 {
     [DbContext(typeof(newsDbContext))]
-    partial class newsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522093850_authtableaddmobile")]
+    partial class authtableaddmobile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,39 +42,35 @@ namespace NewsService.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastLogin")
+                    b.Property<DateTime>("LastLogin")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MobileNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("isActive")
+                    b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("MobileNumber")
-                        .IsUnique();
 
                     b.ToTable("tbl_AuthMaster", "dbo");
                 });
@@ -118,41 +117,6 @@ namespace NewsService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tbl_FileUploadErrorLog", "dbo");
-                });
-
-            modelBuilder.Entity("NewsService.Models.tbl_Logger", b =>
-                {
-                    b.Property<int>("LogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogId"));
-
-                    b.Property<string>("EntityName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Eventdate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Excepction")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TrackingCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LogId");
-
-                    b.ToTable("tbl_Logger", "dbo");
                 });
 
             modelBuilder.Entity("NewsService.Models.tbl_PostMasterMain", b =>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NewsService.Context;
 using NewsService.Models;
 
 namespace NewsService.Interface

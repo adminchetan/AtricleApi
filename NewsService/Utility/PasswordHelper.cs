@@ -6,7 +6,7 @@ namespace NewsService.Utility
     public class PasswordHelper
     {
         private const char Delimiter = ':';
-        public static  string GenerateSaltedHash(string password)
+        public static string GenerateSaltedHash(string password)
         {
             // Generate a random salt
             byte[] salt = new byte[16];

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsService.Context;
 
@@ -11,9 +12,11 @@ using NewsService.Context;
 namespace NewsService.Migrations
 {
     [DbContext(typeof(newsDbContext))]
-    partial class newsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522094950_addlogtable")]
+    partial class addlogtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,39 +42,35 @@ namespace NewsService.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LastLogin")
+                    b.Property<DateTime>("LastLogin")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MobileNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("isActive")
+                    b.Property<bool>("isActive")
                         .HasColumnType("bit");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("MobileNumber")
-                        .IsUnique();
 
                     b.ToTable("tbl_AuthMaster", "dbo");
                 });

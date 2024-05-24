@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewsService.Context;
 
@@ -11,9 +12,11 @@ using NewsService.Context;
 namespace NewsService.Migrations
 {
     [DbContext(typeof(newsDbContext))]
-    partial class newsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240524062720_makeEmailUniqueofAuthtable")]
+    partial class makeEmailUniqueofAuthtable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace NewsService.Migrations
 
                     b.Property<string>("MobileNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
                         .IsRequired()
@@ -68,9 +71,6 @@ namespace NewsService.Migrations
                     b.HasKey("UserId");
 
                     b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("MobileNumber")
                         .IsUnique();
 
                     b.ToTable("tbl_AuthMaster", "dbo");
