@@ -88,6 +88,7 @@ builder.Services.AddTransient<IDocumentHandler, DocumentUploadRepository>();
 builder.Services.AddTransient<IErrorLogger, AllMessageAndLogs>();
 builder.Services.AddTransient<IPostHandler, PostRepository>();
 builder.Services.AddTransient<IAuthHandler, AuthRepository>();
+
 //Dependency Injection//
 
 

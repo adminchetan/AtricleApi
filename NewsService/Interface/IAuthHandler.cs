@@ -10,6 +10,8 @@ namespace NewsService.Interface
         public bool UpdatedLastLoggedIn(string username);
 
 
+        public bool UpdatedPassword(string username, string password);
+
         public bool CheckMobileNumberExist(string mobilenumber);
 
         public bool checkEmailAlredyExist(string email);

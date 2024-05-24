@@ -102,7 +102,25 @@ namespace NewsService.Controllers
                 var(success, message) = _authHandler.CreateNewUser(authDTO);
                 return Json(new { Success = success, Message = message });
             }
-        }         
+        }
+
+
+        [HttpPost]
+        public IActionResult ChangePassword(string username, string newPassword)
+        {
+            _loggger.UserCreationLogInfor("User Requested To change the password", username);
+            var i= _authHandler.UpdatedPassword(username, newPassword);
+
+            if (i == true)
+            {
+                return Json(new { success = true, message = "Password rest successfully" });
+            }
+            else
+            {
+                return Json(new { success = true, message = "Password rest failed" });
+            }
+
+        }
  
     }
 

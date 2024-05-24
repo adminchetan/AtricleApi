@@ -180,5 +180,21 @@ namespace NewsService.Repository
             return (response);
         }
 
+        public bool UpdatedPassword(string username, string password)
+        {
+            var response = false;
+            var record = _newsDbContext.tbl_AuthMasters.FirstOrDefault(r => r.Email == username ||r.MobileNumber==username);
+            if (record != null)
+            {
+
+                var(HashGen, saltGen)=GenerateHashAndSalt(password);
+
+                record.Hash = HashGen; 
+                record.Salt=saltGen;
+                response = Convert.ToBoolean(_newsDbContext.SaveChanges());
+                return (response);
+            }
+            return (response);
+        }
     }
 }
