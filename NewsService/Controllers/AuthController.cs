@@ -56,7 +56,7 @@ namespace NewsService.Controllers
                     _authHandler.UpdatedLastLoggedIn(collection.username);
                 }
 
-                return Ok(new { token = token, LoginName = username, userId = userid, userName = UserCompleteName });
+                return Ok(new { token = token, Name = username, userId = userid, userName = UserCompleteName });
 
             }
 
@@ -67,7 +67,7 @@ namespace NewsService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(AuthDTO authDTO)
+        public IActionResult CreateUser([FromBody]  AuthDTO authDTO)
         {
             var ifExistvalidateMobile=false;
             var ifExistValidateEmail = false; 
@@ -87,15 +87,15 @@ namespace NewsService.Controllers
                 _loggger.UserCreationLogInfor("User Email " + authDTO.Email + " Already Existe in System", authDTO.CurrentUser);
             }
             if( ifExistvalidateMobile==true && ifExistValidateEmail==true) {
-                return Json(new{success=true,message="MobileNumber & Email Already Exist"});
+                return Json(new{success=false,message="MobileNumber & Email Already Exist"});
             }
             if (ifExistvalidateMobile)
             {
-                return Json(new { success = true, message = "MobileNumber Already Exist" });
+                return Json(new { success = false, message = "MobileNumber Already Exist" });
             }
             if (ifExistValidateEmail)
             {
-                return Json(new { success = true, message = "Email Already Exist" });
+                return Json(new { success = false, message = "Email Already Exist" });
             }
             else 
             {

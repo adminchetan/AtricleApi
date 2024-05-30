@@ -21,13 +21,15 @@ namespace NewsService.Repository
         {
 
             _errorLogger.UserCreationLogInfor("Attempting to create User "+authDTO.Email,authDTO.CurrentUser);
-            var (hash, salt) = GenerateHashAndSalt(authDTO.password);
+            var (hash, salt) = GenerateHashAndSalt(authDTO.Password);
             tbl_AuthMaster tbl_AuthMaster = new tbl_AuthMaster()
             {
                 Email=authDTO.Email,
                 Hash=hash,
                 Salt=salt,
                 MobileNumber=authDTO.MobileNumber,
+                FirstName=authDTO.FirstName,
+                LastName=authDTO.LastName,
                 CreatedOn=DateTime.Now,
                 CreatedBy=authDTO.CurrentUser
                
@@ -149,7 +151,7 @@ namespace NewsService.Repository
             var i=false;
             if (mobilenumber!=null)
             {
-                i = _newsDbContext.tbl_AuthMasters.Select(x => x.MobileNumber == mobilenumber).FirstOrDefault();
+                i = _newsDbContext.tbl_AuthMasters.Any(x => x.MobileNumber == mobilenumber);
             }
 
             return i;
@@ -161,8 +163,7 @@ namespace NewsService.Repository
 
             if(email != null)
             {
-                i= _newsDbContext.tbl_AuthMasters.Select(x=>x.Email== email).FirstOrDefault();  
-
+                i = _newsDbContext.tbl_AuthMasters.Any(x => x.Email == email);
             }
 
             return i;

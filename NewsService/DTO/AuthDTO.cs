@@ -18,21 +18,27 @@ namespace NewsService.DTO
 
         public string MobileNumber { get; set; }
 
+        public string FirstName { get; set; }
 
-        public string password { get; set; }
+        public string LastName { get; set; }
+       
+        
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 100 characters")]
+        public string Password { get; set; }
 
-        public bool isActive {  get; set; }
+        //public bool isActive {  get; set; }
 
-        public string loggerMessage { get; set; }
+        // public string loggerMessage { get; set; }
 
 
         public string CurrentUser { get; set; } = null;
 
 
         // below can be used while user try to login
-        public string LoginValidatorMesage { get; set; }
+        //public string LoginValidatorMesage { get; set; }
 
-        public bool IsValidated { get; set; }
+       // public bool IsValidated { get; set; }
 
         
 
